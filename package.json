@@ -1,0 +1,17 @@
+{
+  "name": "smart-buddy",
+  "version": "1.0.0",
+  "description": "A node js Backenfd for the smart buddy(IOT BASED) project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kabir",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
+  }
+}
