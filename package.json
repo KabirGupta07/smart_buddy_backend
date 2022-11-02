@@ -4,7 +4,7 @@
   "description": "A node js Backenfd for the smart buddy(IOT BASED) project",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node app.js swagger.js",
     "dev": "nodemon app.js",
     "swagger-autogen": "node swagger.js"
   },
