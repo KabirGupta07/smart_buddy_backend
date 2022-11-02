@@ -1,7 +1,6 @@
 // const conn = require("../mysql/mysqlConnection").getConnection();
 // const jwt = require('jsonwebtoken');
-
-// const contextual = require('../models/contextual.model');
+const contextual = require('../models/contextual.model');
 const getDeviceId = require('../utils/tokenUtils');
 
 exports.getInfo = (req, res, next) => {
@@ -33,20 +32,19 @@ exports.getInfo = (req, res, next) => {
     // })
 }
 
-
-//  exports.patientInfo = (req, res, next) => { 
-//     const token = req.query.token;
-//     if(!token) return res.status(401).send("Unauthorized! Login first.")
-//     const username = jwt.decode(token).username;
-//     const q = `SELECT * FROM user_info WHERE USERNAME="${username}"`;
-//     conn.query(q, (err, results, fields) => {
-//         if(err) console.log(err);
-//         if(!results) console.log("No results found!");
-//         else{
-//             res.status(200).send(results[0]);
-//         }
-//     })
-//  };
+exports.patientInfo = (req, res, next) => { 
+    const token = req.query.token;
+    if(!token) return res.status(401).send("Unauthorized! Login first.")
+    const username = jwt.decode(token).username;
+    const q = `SELECT * FROM user_info WHERE USERNAME="${username}"`;
+    conn.query(q, (err, results, fields) => {
+        if(err) console.log(err);
+        if(!results) console.log("No results found!");
+        else{
+            res.status(200).send(results[0]);
+        }
+    })
+};
 
 // exports.postPatientOverview = (req, res, next) => {
 //     const token = req.query.token;

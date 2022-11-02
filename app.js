@@ -2,10 +2,17 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const cors = require('cors');
+const fs = require('fs');
 const authRoutes = require("./routes/auth.routes");
 const retailRoutes = require("./routes/retail.routes");
 const contextualRoutes = require("./routes/contextual.routes");
 const surveyRoutes = require("./routes/survey.route");
+
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
+
 
 // MY_SQL Connection 
 const dbConnection = require('./mysql/mysqlConnection');
@@ -17,6 +24,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 app.use(cors(
     {
         origin: "*", // allow the server to accept request from different origin
@@ -24,10 +32,10 @@ app.use(cors(
         credentials: true // allow session cookie from browser to pass through
     }
 ));
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
 app.use('/contextual', contextualRoutes);
-app.use('/retail', retailRoutes);
-app.use('/survey', surveyRoutes);
+// app.use('/retail', retailRoutes);
+// app.use('/survey', surveyRoutes);
 
 
 conn.connect((err, conn) =>{ 

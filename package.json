@@ -4,7 +4,9 @@
   "description": "A node js Backenfd for the smart buddy(IOT BASED) project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "swagger-autogen": "node swagger.js"
   },
   "author": "Kabir",
   "license": "ISC",
@@ -15,6 +17,9 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "swagger-autogen": "^2.22.0",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0"
   }
 }
