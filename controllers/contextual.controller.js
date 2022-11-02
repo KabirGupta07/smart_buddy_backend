@@ -1,6 +1,39 @@
-const conn = require("../mysql/mysqlConnection").getConnection();
-const jwt = require('jsonwebtoken');
-const contextual = require('../models/contextual.model');
+// const conn = require("../mysql/mysqlConnection").getConnection();
+// const jwt = require('jsonwebtoken');
+
+// const contextual = require('../models/contextual.model');
+const getDeviceId = require('../utils/tokenUtils');
+
+exports.getInfo = (req, res, next) => {
+    const token = req.query.token;
+    // if(!token) {
+    //     return res.status(401)
+    //             .send("Unauthorized! No Token.");
+    // }
+
+    // const device_id = getDeviceId(token);
+    // console.log(device_id);
+    const resJson = {
+        date:"",
+        productSKU: "Tata Salt",
+        brand:"tata",
+        quantity: 2,
+        price: 10,
+        total: 20
+    }
+    res.status(200).send(resJson);
+    // const q = `SELECT * FROM users_history WHERE username="${username}"`;
+    // // console.log(q);
+    // conn.query(q, (err, results, fields) => {
+    //     if(err) console.log(err);
+    //     if(!results) console.log("No results found!");
+    //     else{
+    //         res.status(200).send(results);
+    //     }
+    // })
+    
+    res.status().json(results);
+}
 
 
 //  exports.patientInfo = (req, res, next) => { 
