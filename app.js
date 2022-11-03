@@ -15,8 +15,7 @@ const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 
 
 // MY_SQL Connection 
-const dbConnection = require('./mysql/mysqlConnection');
-const conn = dbConnection.getConnection();
+const conn = require('./mysql/connectionVerify');
 
 const PORT = process.env.PORT;
 app.get('/', (req, res, next) => {
@@ -32,11 +31,10 @@ app.use(cors(
         credentials: true // allow session cookie from browser to pass through
     }
 ));
-// app.use('/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/contextual', contextualRoutes);
-// app.use('/retail', retailRoutes);
-// app.use('/survey', surveyRoutes);
-
+app.use('/retail', retailRoutes);
+app.use('/survey', surveyRoutes);
 
 conn.connect((err, conn) =>{ 
     if(err) return console.log(err);

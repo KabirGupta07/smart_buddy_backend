@@ -1,5 +1,20 @@
-const retail = require("../models/retail.model");
+const Retail = require("../models/retail.model");
+exports.getData = async (req, res, next) =>{
+    try{
+        const[data, _] = await Retail.findAll();
+        return res.status(200).json(data);
+    }
+    catch{
+        (err) =>{
+            console.log(err);
+            return res.status(500);
+        }
+    }
+}
 
+exports.postData = async (req, res, next) =>{
+    return res.status(201).json({res: "SAVED SUCCESSFULLY"});
+}
 // exports.postSiteOptions = (req, res, next) =>{
 //     const option = req.body.value;
 //     const label = option.toUpperCase();

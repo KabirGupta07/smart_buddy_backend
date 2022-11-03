@@ -1,4 +1,4 @@
-const conn = require("../mysql/mysqlConnection").getConnection();
+const conn = require('../mysql/mysqlConnection');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
