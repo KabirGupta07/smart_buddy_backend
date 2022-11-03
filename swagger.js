@@ -6,7 +6,7 @@ const doc = {
       description: 'Description',
     },
     host: `${process.env.SERVER_URL}`,
-    schemes: ['http'],
+    schemes: ['https'],
   };
   
 
