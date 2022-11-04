@@ -1,10 +1,21 @@
 // const conn = require("../mysql/mysqlConnection").getConnection();
 // const jwt = require('jsonwebtoken');
-const contextual = require('../models/contextual.model');
+const Contextual = require('../models/contextual.model');
 const getDeviceId = require('../utils/tokenUtils');
 
-exports.getInfo = (req, res, next) => {
-    const token = req.query.token;
+exports.getData = async (req, res, next) => {
+
+    try{
+        const [data, _] = await GamePlay.findAll();
+        return res.status(200).json(data);
+    }
+    catch{
+        (err) =>{
+            console.log(err);
+            return res.status(500);
+        }
+    }
+    // const token = req.query.token;
     // if(!token) {
     //     return res.status(401)
     //             .send("Unauthorized! No Token.");
@@ -12,15 +23,18 @@ exports.getInfo = (req, res, next) => {
 
     // const device_id = getDeviceId(token);
     // console.log(device_id);
-    const resJson = {
-        date:"",
-        productSKU: "Tata Salt",
-        brand:"tata",
-        quantity: 2,
-        price: 10,
-        total: 20
-    }
-    res.status(200).send(resJson);
+  
+    // const resJson = {
+    //     date:"",
+    //     productSKU: "Tata Salt",
+    //     brand:"tata",
+    //     quantity: 2,
+    //     price: 10,
+    //     total: 20
+    // }
+    // res.status(200).send(resJson);
+  
+  
     // const q = `SELECT * FROM users_history WHERE username="${username}"`;
     // // console.log(q);
     // conn.query(q, (err, results, fields) => {
@@ -32,18 +46,24 @@ exports.getInfo = (req, res, next) => {
     // })
 }
 
-exports.patientInfo = (req, res, next) => { 
-    const token = req.query.token;
-    if(!token) return res.status(401).send("Unauthorized! Login first.")
-    const username = jwt.decode(token).username;
-    const q = `SELECT * FROM user_info WHERE USERNAME="${username}"`;
-    conn.query(q, (err, results, fields) => {
-        if(err) console.log(err);
-        if(!results) console.log("No results found!");
-        else{
-            res.status(200).send(results[0]);
+exports.postData = async(req, res, next) => { 
+    let video = req.body.video;
+    let device_id = req.body.device_id;
+    let playtime = req.body.playtime;
+    let contextual_id = req.body.contextual_id;
+    
+    const contextual = new Contextual(contextual_id, playtime, device_id, video);
+    console.log(contextual);
+    try{
+        const [data, _] = await contextual.save(); 
+        return res.status(200).json(data);
+    }
+    catch{
+        (err) =>{
+            console.log(err);
+            return res.status(500);
         }
-    })
+    }
 };
 
 // exports.postPatientOverview = (req, res, next) => {

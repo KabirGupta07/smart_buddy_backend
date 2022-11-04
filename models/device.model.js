@@ -11,11 +11,6 @@ class Device{
 
     save(){
         let date = new Date();
-        // let yyyy = date.getYear();
-        // let mm = date.getMonth();
-        // let dd = date.getDay();
-
-        // let created_date = `${yyyy}-${mm}-${dd}`;
         let sql= `
         INSERT INTO device(
             MAC,
@@ -32,9 +27,8 @@ class Device{
             '${this.store}',
             '${this.user_id}',
             '${this.RAM}'
-        )
-        `;
-
+        )`;
+        console.log(sql);
         const res = db.execute(sql);
         console.log(res);
         return res
