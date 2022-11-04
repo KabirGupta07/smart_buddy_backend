@@ -4,7 +4,7 @@ const contextualController = require("../controllers/contextual.controller");
 // ENDPOINT = /contextual
 
 // DEVICE ENDPOINTS
-router.route("/get_data")
+router.route("/data")
 .get(contextualController.getData)
 .post(contextualController.postData);
 // router.post("add_video/:retail_id", );

@@ -6,7 +6,7 @@ const getDeviceId = require('../utils/tokenUtils');
 exports.getData = async (req, res, next) => {
 
     try{
-        const [data, _] = await GamePlay.findAll();
+        const [data, _] = await Contextual.findAll();
         return res.status(200).json(data);
     }
     catch{
