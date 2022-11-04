@@ -1,7 +1,6 @@
 const db = require('../mysql/mysqlConnection');
 class Survey{
-    constructor(MAC, IP, geo_location, store, name,RAM){
-        this.MAC = MAC;
+    constructor(IP, geo_location, store, name,RAM){
         this.IP = IP;
         this.geo_location= geo_location;
         this.store = store;

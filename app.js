@@ -7,7 +7,8 @@ const authRoutes = require("./routes/auth.routes");
 const retailRoutes = require("./routes/retail.routes");
 const contextualRoutes = require("./routes/contextual.routes");
 const surveyRoutes = require("./routes/survey.route");
-const gameplayRoutes = require('./routes/gameplay.routes')
+const gameplayRoutes = require('./routes/gameplay.routes');
+const gameRoutes = require('./routes/game.routes');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -36,6 +37,7 @@ app.use('/contextual', contextualRoutes);
 app.use('/retail', retailRoutes);
 app.use('/survey', surveyRoutes);
 app.use('/gameplay', gameplayRoutes);
+app.use('/game', gameRoutes);
 
 
 conn.connect((err, conn) =>{ 
