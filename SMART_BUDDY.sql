@@ -33,21 +33,11 @@ PRIMARY KEY(contextual_id)
 );
 
 CREATE TABLE contextual_play(
-game_id INT unique auto_increment,
+contextual_id INT unique auto_increment,
 played_at date,
-name VARCHAR(30),
-age  INT,
-address VARCHAR(30),
--- location:
--- pincode:
--- city:
--- state:
-mobile_no VARCHAR(13),
-location VARCHAR(30),
-PRIMARY KEY(game_id)
+device_id  int,
+PRIMARY KEY(contextual_id, played_at)
 );
-
-
 
 -- GAMIFICATION
 CREATE TABLE game(
