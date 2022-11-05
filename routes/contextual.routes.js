@@ -5,12 +5,14 @@ const contextualPlayController = require('../controllers/contextualplay.controll
 
 // DEVICE ENDPOINTS
 router.route("/data")
-.get(contextualController.getData)
-.post(contextualController.postData);
+    .get(contextualController.getData)
+    .post(contextualController.postData);
+
+router.route('/play/data/:contextual_id')
+    .post(contextualPlayController.postPlayData);
 // router.post("add_video/:retail_id", );
 // router.post("/update_video/:retail_id",);
-router.route('/play/data/:contextual_id')
-.post(contextualPlayController.postPlayData);
+
 
 // router.post("/data/:retail_id",);
 // router.get("/stats",);
