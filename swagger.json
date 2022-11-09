@@ -37,37 +37,8 @@
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "video": {
-                  "example": "any"
-                },
-                "device_id": {
-                  "example": "any"
-                },
-                "playtime": {
-                  "example": "any"
-                },
-                "contextual_id": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "parameters": [],
+        "responses": {}
       }
     },
     "/contextual/play/data/{contextual_id}": {
@@ -104,6 +75,76 @@
             "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/contextualadd_video/{retail_id}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "retail_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/contextual/upload_video/verify": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/upload_video/merge": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/*upload_video/verify": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/upload_video": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/update_video/{retail_id}": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/data/{retail_id}": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/stats": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/contextual/delete": {
+      "delete": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/retail/data": {

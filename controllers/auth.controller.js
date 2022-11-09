@@ -18,6 +18,21 @@ exports.getA = async(req, res, next) => {
     }
     
 };
+
+exports.googleLogin = (req, res, next) => {
+    const token = req.body.token;
+    if(!token) return res.status(500);
+    const jwtToken = jwt.decode(token);
+    console.log(jwtToken);
+    const name = jwtToken.name;
+    const email = jwtToken.email;
+    const picture = jwtToken.picture;
+    // try{
+    //     const user = new User(name, email);
+
+    // }
+    return res.status(200);
+}
 exports.getRefreshToken = (req, res, next) => {};
 exports.verifyAccessToken = (req, res, next) => {};
 exports.verifyRefreshToken = (req, res, next) => {}; 

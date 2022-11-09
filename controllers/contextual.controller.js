@@ -3,7 +3,6 @@ const Contextual = require('../models/contextual.model');
 const multiparty = require('multiparty');
 const path = require("path");
 const fse = require = require("fs-extra");
-const getDeviceId = require('../utils/tokenUtils');
 
 exports.getData = async (req, res, next) => {
 
@@ -59,153 +58,153 @@ const createChunkDir = (fileHash) => path.resolve(UPLOAD_DIR, `chunkDir_${fileHa
 
 // write to file stream
 const pipeStream = (path, writeStream) =>
-  new Promise(resolve => {
-    const readStream = fse.createReadStream(path);
-    readStream.on("end", () => {
-      fse.unlinkSync(path);
-      resolve();
+    new Promise(resolve => {
+        const readStream = fse.createReadStream(path);
+        readStream.on("end", () => {
+            fse.unlinkSync(path);
+            resolve();
+        });
+        readStream.pipe(writeStream);
     });
-    readStream.pipe(writeStream);
-  });
 
 // merge file chunks
 const mergeFileChunk = async (filePath, fileHash, size) => {
-  const chunkDir = createChunkDir(fileHash);
-  const chunkPaths = await fse.readdir(chunkDir);
+    const chunkDir = createChunkDir(fileHash);
+    const chunkPaths = await fse.readdir(chunkDir);
 
-  // sort by chunk index
-  // otherwise, the order of reading the directory may be wrong
-  chunkPaths.sort((a, b) => a.split("-")[1] - b.split("-")[1]);
+    // sort by chunk index
+    // otherwise, the order of reading the directory may be wrong
+    chunkPaths.sort((a, b) => a.split("-")[1] - b.split("-")[1]);
 
-  // write file concurrently
-  await Promise.all(
-    chunkPaths.map((chunkPath, index) =>
-      pipeStream(
-        path.resolve(chunkDir, chunkPath),
-        // create write stream at the specified starting location according to size
-        fse.createWriteStream(filePath, {
-          start: index * size
-        })
-      )
-    )
-  );
-  // delete chunk directory after merging
-  fse.rmdirSync(chunkDir);
+    // write file concurrently
+    await Promise.all(
+        chunkPaths.map((chunkPath, index) =>
+            pipeStream(
+                path.resolve(chunkDir, chunkPath),
+                // create write stream at the specified starting location according to size
+                fse.createWriteStream(filePath, {
+                    start: index * size
+                })
+            )
+        )
+    );
+    // delete chunk directory after merging
+    fse.rmdirSync(chunkDir);
 };
 
 const resolvePost = (req) =>
-  new Promise(resolve => {
-    let chunk = "";
-    req.on("data", data => {
-      chunk += data;
+    new Promise(resolve => {
+        let chunk = "";
+        req.on("data", data => {
+            chunk += data;
+        });
+        req.on("end", () => {
+            resolve(JSON.parse(chunk));
+        });
     });
-    req.on("end", () => {
-      resolve(JSON.parse(chunk));
-    });
-  });
 
 // return chunk names which is uploaded
 const createUploadedList = async fileHash =>
-  fse.existsSync(path.resolve(UPLOAD_DIR, fileHash))
-    ? await fse.readdir(path.resolve(UPLOAD_DIR, fileHash))
-    : [];
+    fse.existsSync(path.resolve(UPLOAD_DIR, fileHash))
+        ? await fse.readdir(path.resolve(UPLOAD_DIR, fileHash))
+        : [];
 
 
-exports.handleMerge = async (req, res, next) =>{
+exports.handleMerge = async (req, res, next) => {
     const data = await resolvePost(req);
     const { fileHash, filename, size } = data;
     const ext = extractExt(filename);
     const filePath = path.resolve(UPLOAD_DIR, `${fileHash}${ext}`);
     await mergeFileChunk(filePath, fileHash, size);
     res.end(
-      JSON.stringify({
-        code: 0,
-        message: "file merged success"
-      })
+        JSON.stringify({
+            code: 0,
+            message: "file merged success"
+        })
     );
 };
 
 
 // delete all files
-exports.deleteFile = async(req, res, next) =>{
+exports.deleteFiles = async (req, res, next) => {
     await fse.remove(path.resolve(UPLOAD_DIR));
     res.end(
-      JSON.stringify({
-        code: 0,
-        message: "file delete success"
-      })
+        JSON.stringify({
+            code: 0,
+            message: "file delete success"
+        })
     );
 }
 
 
-  // process chunk
-  exports.handleFormData = (req, res, next) => {
+// process chunk
+exports.handleFormData = (req, res, next) => {
     const multipart = new multiparty.Form();
 
     multipart.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error(err);
-        res.status = 500;
-        res.end("process file chunk failed");
-        return;
-      }
-      const [chunk] = files.chunk;
-      const [hash] = fields.hash;
-      const [fileHash] = fields.fileHash;
-      const [filename] = fields.filename;
-      const filePath = path.resolve(
-        UPLOAD_DIR,
-        `${fileHash}${extractExt(filename)}`
-      );
-      const chunkDir = createChunkDir(fileHash);
-      const chunkPath = path.resolve(chunkDir, hash);
+        if (err) {
+            console.error(err);
+            res.status = 500;
+            res.end("process file chunk failed");
+            return;
+        }
+        const [chunk] = files.chunk;
+        const [hash] = fields.hash;
+        const [fileHash] = fields.fileHash;
+        const [filename] = fields.filename;
+        const filePath = path.resolve(
+            UPLOAD_DIR,
+            `${fileHash}${extractExt(filename)}`
+        );
+        const chunkDir = createChunkDir(fileHash);
+        const chunkPath = path.resolve(chunkDir, hash);
 
-      // return if file exists
-      if (fse.existsSync(filePath)) {
-        res.end("file exist");
-        return;
-      }
+        // return if file exists
+        if (fse.existsSync(filePath)) {
+            res.end("file exist");
+            return;
+        }
 
-      // return if chunk is exists
-      if (fse.existsSync(chunkPath)) {
-        res.end("chunk exist");
-        return;
-      }
+        // return if chunk is exists
+        if (fse.existsSync(chunkPath)) {
+            res.end("chunk exist");
+            return;
+        }
 
-      // if chunk directory is not exist, create it
-      if (!fse.existsSync(chunkDir)) {
-        await fse.mkdirs(chunkDir);
-      }
+        // if chunk directory is not exist, create it
+        if (!fse.existsSync(chunkDir)) {
+            await fse.mkdirs(chunkDir);
+        }
 
-      // fs-extra 的 rename 方法 windows 平台会有权限问题
-      // use fs.move instead of fs.rename
-      // https://github.com/meteor/meteor/issues/7852#issuecomment-255767835
-      await fse.move(chunk.path, path.resolve(chunkDir, hash));
-      res.end("received file chunk");
+        // fs-extra 的 rename 方法 windows 平台会有权限问题
+        // use fs.move instead of fs.rename
+        // https://github.com/meteor/meteor/issues/7852#issuecomment-255767835
+        await fse.move(chunk.path, path.resolve(chunkDir, hash));
+        res.end("received file chunk");
     });
-  }
+}
 
-  // Verify if a chunk is uploaded/uploaded
-  exports.handleVerifyUpload = async (req, res) => {
+// Verify if a chunk is uploaded/uploaded
+exports.handleVerifyUpload = async (req, res, next) => {
     const data = await resolvePost(req);
     const { fileHash, filename } = data;
     const ext = extractExt(filename);
     const filePath = path.resolve(UPLOAD_DIR, `${fileHash}${ext}`);
     if (fse.existsSync(filePath)) {
-      res.end(
-        JSON.stringify({
-          shouldUpload: false
-        })
-      );
+        res.end(
+            JSON.stringify({
+                shouldUpload: false
+            })
+        );
     } else {
-      res.end(
-        JSON.stringify({
-          shouldUpload: true,
-          uploadedList: await createUploadedList(fileHash)
-        })
-      );
+        res.end(
+            JSON.stringify({
+                shouldUpload: true,
+                uploadedList: await createUploadedList(fileHash)
+            })
+        );
     }
-  }
+}
 
 
 // exports.postPatientOverview = (req, res, next) => {
