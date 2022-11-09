@@ -10,13 +10,20 @@ router.route("/data")
 
 router.route('/play/data/:contextual_id')
     .post(contextualPlayController.postPlayData);
-// router.post("add_video/:retail_id", );
+router.post("add_video/:retail_id", contextualController.addVideo);
+
+router.post("/upload_video/verify", contextualController.handleVerifyUpload);
+
+router.post("/upload_video/merge", contextualController.handleVerifyUpload);
+
+router.post("//upload_video/verify", contextualController.handleVerifyUpload);
+
+router.post("/upload_video", contextualController.handleFormData);
+
+
 // router.post("/update_video/:retail_id",);
-
-
 // router.post("/data/:retail_id",);
 // router.get("/stats",);
 // router.delete("/delete",);
-
 
 module.exports = router;

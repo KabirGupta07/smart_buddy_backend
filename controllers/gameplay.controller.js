@@ -24,7 +24,7 @@ exports.postData = async (req, res, next) =>{
     const gamePlay = new GamePlay(played_at, name, age, address, mobile_no, location);
     console.log(gamePlay);
     try{
-        const [data, _] = await gamePlay.save(); 
+        const [data,_] = await gamePlay.save(); 
         return res.status(200).json(data);
     }
     catch{

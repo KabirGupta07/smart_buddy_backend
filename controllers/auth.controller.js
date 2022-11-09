@@ -1,8 +1,23 @@
 const conn = require('../mysql/mysqlConnection');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const Device = require('../models/device.model');
 
-exports.getAccessToken = (req, res, next) => {};
+exports.getA = async(req, res, next) => {
+    let MAC = req.body.MAC;
+    if(!MAC) return res.status(401);    
+    try{
+        const [data, extra] = await Device.findByMACId(MAC);
+        console.log(extra);
+        if(!data) return res.status(401).send("No such Registered Device!");
+        console.log(data);
+    }
+    catch{(err) =>{
+            console.log(err);
+        }
+    }
+    
+};
 exports.getRefreshToken = (req, res, next) => {};
 exports.verifyAccessToken = (req, res, next) => {};
 exports.verifyRefreshToken = (req, res, next) => {}; 

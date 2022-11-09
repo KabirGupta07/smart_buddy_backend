@@ -37,7 +37,8 @@ exports.postGame = async (req, res, next) =>{
     const game = new Game(game_name, expected_duration, prize, created_by, questions)
     // console.log(game);
     try{
-        const [data, _] = await game.save();
+        const [data, extra] = await game.save();
+        console.log(extra);
         return res.status(200).json(data);
     }
     catch{

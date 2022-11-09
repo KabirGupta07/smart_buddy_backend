@@ -33,6 +33,11 @@ class Device{
         console.log(res);
         return res
     }
+
+    static findByMACId(MAC){
+        let sql = `SELECT * from ${registered_devices} where MAC= ${MAC}`;
+        db.execute(sql);
+    }
 }
 
 module.exports = Device;
