@@ -111,8 +111,9 @@ const createUploadedList = async fileHash =>
 
 
 exports.handleMerge = async (req, res, next) => {
-    const data = await resolvePost(req);
-    const { fileHash, filename, size } = data;
+    // const data = await resolvePost(req);
+    // console.log(data);
+    const { fileHash, filename, size } = req.body;
     const ext = extractExt(filename);
     const filePath = path.resolve(UPLOAD_DIR, `${fileHash}${ext}`);
     await mergeFileChunk(filePath, fileHash, size);
@@ -186,8 +187,7 @@ exports.handleFormData = (req, res, next) => {
 
 // Verify if a chunk is uploaded/uploaded
 exports.handleVerifyUpload = async (req, res, next) => {
-    const data = await resolvePost(req);
-    console.log(data);
+    // const data = await resolvePost(req);
     const { fileHash, filename } = req.body;
     const ext = extractExt(filename);
     const filePath = path.resolve(UPLOAD_DIR, `${fileHash}${ext}`);
