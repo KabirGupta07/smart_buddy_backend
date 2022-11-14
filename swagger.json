@@ -34,11 +34,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     },
     "/contextual/play/data/{contextual_id}": {
@@ -77,25 +72,31 @@
         }
       }
     },
-    "/contextualadd_video/{retail_id}": {
+    "/contextual/upload_video/verify": {
       "post": {
         "description": "",
         "parameters": [
           {
-            "name": "retail_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fileHash": {
+                  "example": "any"
+                },
+                "filename": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
-        "responses": {}
-      }
-    },
-    "/contextual/upload_video/verify": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/contextual/upload_video/merge": {
@@ -105,43 +106,15 @@
         "responses": {}
       }
     },
-    "/contextual/*upload_video/verify": {
+    "/contextual/upload_video/delete": {
       "post": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/contextual/upload_video": {
+    "/contextual/upload_video/data": {
       "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/contextual/update_video/{retail_id}": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/contextual/data/{retail_id}": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/contextual/stats": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/contextual/delete": {
-      "delete": {
         "description": "",
         "parameters": [],
         "responses": {}

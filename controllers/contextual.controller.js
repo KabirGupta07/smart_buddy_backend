@@ -187,22 +187,17 @@ exports.handleFormData = (req, res, next) => {
 // Verify if a chunk is uploaded/uploaded
 exports.handleVerifyUpload = async (req, res, next) => {
     const data = await resolvePost(req);
-    const { fileHash, filename } = data;
+    console.log(data);
+    const { fileHash, filename } = req.body;
     const ext = extractExt(filename);
     const filePath = path.resolve(UPLOAD_DIR, `${fileHash}${ext}`);
     if (fse.existsSync(filePath)) {
-        res.end(
-            JSON.stringify({
-                shouldUpload: false
-            })
-        );
+        res.json({shouldUpload: false});
     } else {
-        res.end(
-            JSON.stringify({
-                shouldUpload: true,
-                uploadedList: await createUploadedList(fileHash)
-            })
-        );
+        res.json({
+            shouldUpload: true,
+            uploadedList: await createUploadedList(fileHash)
+        });
     }
 }
 

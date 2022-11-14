@@ -3,20 +3,20 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const Device = require('../models/device.model');
 
-exports.getA = async(req, res, next) => {
+exports.verifyDevice = async(req, res, next) => {
     let MAC = req.body.MAC;
     if(!MAC) return res.status(401);    
-    try{
-        const [data, extra] = await Device.findByMACId(MAC);
-        console.log(extra);
-        if(!data) return res.status(401).send("No such Registered Device!");
-        console.log(data);
-    }
-    catch{(err) =>{
-            console.log(err);
-        }
-    }
-    
+    // try{
+    //     const [data, extra] = await Device.findByMACId(MAC);
+    //     console.log(extra);
+    //     if(!data) return res.status(401).send("No such Registered Device!");
+    //     console.log(data);
+    // }
+    // catch{(err) =>{
+    //         console.log(err);
+    //     }
+    // }
+    return res.json({message:"DEVICE VERIFIED!"}).status(200);
 };
 
 exports.googleLogin = (req, res, next) => {
