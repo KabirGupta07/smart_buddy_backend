@@ -30,7 +30,7 @@ app.use(cors(
         origin: "*", // allow the server to accept request from different origin,
         // allowedHeaders: ["Content_Type", "Authorization","X-Requested-With"],
         allowedHeaders: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
         credentials: true // allow session cookie from browser to pass through
     }
 ));
