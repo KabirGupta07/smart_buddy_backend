@@ -29,11 +29,11 @@ exports.googleLogin = async(req, res, next) => {
     if(!token) return res.status(400);    
     const jwtDecode = jwt.decode(token);
     console.log(jwtDecode);
-    const id = jwtDecode.user_id;
+    const email = jwtDecode.email;
     if(!id) return res.status(400);
 
     try{
-        const [user, _] = await User.findById(id)
+        const [user, _] = await User.findByEmail(email)
         return res.status(200).json(user[0]);
     }
     catch{(err) => {

@@ -30,7 +30,7 @@ class User{
         return db.execute(sql);
     }
     static findByEmail(email){
-        let sql = `SELECT * from ${database} where email = ${email}`;
+        let sql = `SELECT * from ${database} where email = "${email}"`;
         return db.execute(sql);
     }
 }
