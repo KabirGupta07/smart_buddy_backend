@@ -40,30 +40,21 @@ exports.googleLogin = async (req, res, next) => {
             const picture = jwtDecode.picture;
             const user = new User(name, email, picture);
             console.log(user);
-            try {
-                const [data, extra] = await user.save();
-                console.log(data.insertId);
-                const [userData, _] = await User.findById(data.insertId);
-                // user = userData[0];
-                console.log(user);
-                console.log(userData[0]);
-                const token = jwt.sign(
-                    userData[0],
-                    process.env.JWT_SECRET
-                );
-                console.log(token);
-                return res.status(200).json({
-                    user: userData[0],
-                    token: token
-                });
-            }
-            catch {
-                (err) => {
-                    console.log(err);
-                    return res.status(500);
-                }
-            }
-        } 
+            const [data, extra] = await user.save();
+            console.log(data.insertId);
+            const [userData, _] = await User.findById(data.insertId);
+            console.log(user);
+            console.log(userData[0]);
+            const token = jwt.sign(
+                userData[0],
+                process.env.JWT_SECRET
+            );
+            console.log(token);
+            return res.status(200).json({
+                user: userData[0],
+                token: token
+            });
+        }
         else {
             return res.status(200).json(user[0]);
         }
