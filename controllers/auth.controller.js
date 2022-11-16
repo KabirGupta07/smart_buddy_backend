@@ -21,31 +21,24 @@ exports.verifyDevice = async(req, res, next) => {
     return res.json({message:"DEVICE VERIFIED!"}).status(200);
 };
 
-exports.user = async(req, res, next) => {
-    let id = req.body.id;
-    // if(!MAC) return res.status(401);    
-    // try{
-    //     const [data, extra] = await Device.findByMACId(MAC);
-    //     console.log(extra);
-    //     if(!data) return res.status(401).send("No such Registered Device!");
-    //     console.log(data);
-    // }
-    // catch{(err) =>{
-    //         console.log(err);
-    //     }
-    // }
+exports.googleLogin = async(req, res, next) => {
+    const token = req.body.token;
+    if(!token) return res.status(400);    
+    const jwtDecode = jwt.decode(token);
+    const id = jwtDecode.id;
+    if(!id) return res.status(400);
 
     try{
-        const user = await User.findById(id)
-        return user;
+        const [user, _] = await User.findById(id)
+        return res.status(200).json(user);
     }
     catch{(err) => {
-
-    }}
-    return res.json({message:"DEVICE VERIFIED!"}).status(200);
+        console.log(err);
+        return res.status(500).json(err);
+    }};
 };
 
-exports.googleLogin = async (req, res, next) => {
+exports.googleSignup = async (req, res, next) => {
     const token = req.body.token;
     if(!token) return res.status(400);
     const jwtToken = jwt.decode(token);
