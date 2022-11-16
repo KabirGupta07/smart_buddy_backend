@@ -5,58 +5,92 @@ const Device = require('../models/device.model');
 const User = require('../models/user.model');
 // const {User} = require("./models");
 
-exports.verifyDevice = async(req, res, next) => {
+exports.verifyDevice = async (req, res, next) => {
     let MAC = req.body.MAC;
-    if(!MAC) return res.status(401);
+    if (!MAC) return res.status(401);
     console.log(MAC);
-        
-    try{
+
+    try {
         const [data, extra] = await Device.findByMACId(MAC);
         console.log(extra);
-        if(!data) return res.status(401).send("No such Registered Device!");
-        return res.json({message:"DEVICE VERIFIED!"}).status(200);
+        if (!data) return res.status(401).send("No such Registered Device!");
+        return res.json({ message: "DEVICE VERIFIED!" }).status(200);
     }
-    catch{(err) =>{
+    catch {
+        (err) => {
             console.log(err);
-            return res.json({error: err}).status(401);
+            return res.json({ error: err }).status(401);
         }
     }
 };
 
-exports.googleLogin = async(req, res, next) => {
+exports.googleLogin = async (req, res, next) => {
     const token = req.body.token;
     console.log(token);
-    if(!token) return res.status(400);    
+    if (!token) return res.status(400);
     const jwtDecode = jwt.decode(token);
     console.log(jwtDecode);
     const email = jwtDecode.email;
-    if(!id) return res.status(400);
+    if (!id) return res.status(400);
 
-    try{
+    try {
         const [user, _] = await User.findByEmail(email)
-        return res.status(200).json(user[0]);
+        if (user.length == 0) {
+            const name = jwtDecode.name;
+            const picture = jwtDecode.picture;
+            const user = new User(name, email, picture);
+            console.log(user);
+            try {
+                const [data, extra] = await user.save();
+                console.log(data.insertId);
+                const [userData, _] = await User.findById(data.insertId);
+                // user = userData[0];
+                console.log(user);
+                console.log(userData[0]);
+                const token = jwt.sign(
+                    userData[0],
+                    process.env.JWT_SECRET
+                );
+                console.log(token);
+                return res.status(200).json({
+                    user: userData[0],
+                    token: token
+                });
+            }
+            catch {
+                (err) => {
+                    console.log(err);
+                    return res.status(500);
+                }
+            }
+        } 
+        else {
+            return res.status(200).json(user[0]);
+        }
     }
-    catch{(err) => {
-        console.log(err);
-        return res.status(500).json(err);
-    }};
+    catch {
+        (err) => {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    };
 };
 
 exports.googleSignup = async (req, res, next) => {
-    // const token = req.params.token;
-    // if(!token) return res.status(400);
-    // const jwtToken = jwt.decode(token);
-    // console.log(jwtToken);
-    // const name = jwtToken.name;
-    // const email = jwtToken.email;
-    // const picture = jwtToken.picture;
-    const name = req.body.name;
-    const email = req.body.email;
-    const picture = req.body.picture;
-    console.log(req.body);
+    const token = req.params.token;
+    if (!token) return res.status(400);
+    const jwtToken = jwt.decode(token);
+    console.log(jwtToken);
+    const name = jwtToken.name;
+    const email = jwtToken.email;
+    const picture = jwtToken.picture;
+    // const name = req.body.name;
+    // const email = req.body.email;
+    // const picture = req.body.picture;
+    // console.log(req.body);
     const user = new User(name, email, picture);
     console.log(user);
-    try{
+    try {
         const [data, extra] = await user.save();
         console.log(data.insertId);
         const [userData, _] = await User.findById(data.insertId);
@@ -64,32 +98,32 @@ exports.googleSignup = async (req, res, next) => {
         console.log(user);
         console.log(userData[0]);
         const token = jwt.sign(
-            userData[0], 
+            userData[0],
             process.env.JWT_SECRET
         );
         console.log(token);
         return res.status(200).json({
             user: userData[0],
-            token: token            
+            token: token
         });
     }
-    catch{
-        (err) =>{
+    catch {
+        (err) => {
             console.log(err);
             return res.status(500);
         }
     }
-    
+
     // try{
     //     const user = new User(name, email);
 
     // }
 }
 
-exports.getRefreshToken = (req, res, next) => {};
-exports.verifyAccessToken = (req, res, next) => {};
-exports.verifyRefreshToken = (req, res, next) => {}; 
-exports.deleteToken = (req, res, next) => {};
+exports.getRefreshToken = (req, res, next) => { };
+exports.verifyAccessToken = (req, res, next) => { };
+exports.verifyRefreshToken = (req, res, next) => { };
+exports.deleteToken = (req, res, next) => { };
 
 
 // exports.userLogin = async (req, res, next) => {
@@ -117,9 +151,9 @@ exports.deleteToken = (req, res, next) => {};
 //                 else {
 //                     res.status(401).send("Invalid Username or Password");
 //                 }
-//             }    
+//             }
 //         });
-//     }   
+//     }
 //     catch{(err) => {
 //             res.status(500).send(err);
 //         }
