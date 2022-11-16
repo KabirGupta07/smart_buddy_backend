@@ -2,6 +2,8 @@ const conn = require('../mysql/mysqlConnection');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const Device = require('../models/device.model');
+const User = require('../models/user.model');
+// const {User} = require("./models");
 
 exports.verifyDevice = async(req, res, next) => {
     let MAC = req.body.MAC;
@@ -19,7 +21,31 @@ exports.verifyDevice = async(req, res, next) => {
     return res.json({message:"DEVICE VERIFIED!"}).status(200);
 };
 
-exports.googleLogin = (req, res, next) => {
+exports.user = async(req, res, next) => {
+    let id = req.body.id;
+    // if(!MAC) return res.status(401);    
+    // try{
+    //     const [data, extra] = await Device.findByMACId(MAC);
+    //     console.log(extra);
+    //     if(!data) return res.status(401).send("No such Registered Device!");
+    //     console.log(data);
+    // }
+    // catch{(err) =>{
+    //         console.log(err);
+    //     }
+    // }
+
+    try{
+        const user = await User.findById(id)
+        return user;
+    }
+    catch{(err) => {
+
+    }}
+    return res.json({message:"DEVICE VERIFIED!"}).status(200);
+};
+
+exports.googleLogin = async (req, res, next) => {
     const token = req.body.token;
     if(!token) return res.status(400);
     const jwtToken = jwt.decode(token);
@@ -27,17 +53,27 @@ exports.googleLogin = (req, res, next) => {
     const name = jwtToken.name;
     const email = jwtToken.email;
     const picture = jwtToken.picture;
+    const user = new User(name, email, picture);
+    console.log(user);
+    try{
+        const [data, extra] = await user.save();
+        console.log(data.insertId);
+        const [userData, _] = await User.findById(data.insertId);
+        return res.status(200).json(userData[0]);
+    }
+    catch{
+        (err) =>{
+            console.log(err);
+            return res.status(500);
+        }
+    }
     
     // try{
     //     const user = new User(name, email);
 
     // }
-    return res.status(200).json({
-        name: name,
-        email: email,
-        picture: picture
-    });
 }
+
 exports.getRefreshToken = (req, res, next) => {};
 exports.verifyAccessToken = (req, res, next) => {};
 exports.verifyRefreshToken = (req, res, next) => {}; 

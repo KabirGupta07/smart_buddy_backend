@@ -13,7 +13,7 @@ const gameRoutes = require('./routes/game.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
-
+// const db = require("./models");
 
 // MY_SQL Connection 
 const conn = require('./mysql/connectionVerify');
@@ -45,8 +45,10 @@ app.use('/game', gameRoutes);
 conn.connect((err, conn) =>{ 
     if(err) return console.log(err);
     if(conn) console.log("MySQL database connected!");
-    app.listen(PORT, (err) => {
-        if(err) console.log("Error in starting Server: " +  err);
-        else console.log(`Starting server on PORT ${PORT}`);
-    })
+    // db.sequelize.sync().then((req) =>{
+        app.listen(PORT, (err) => {
+            if(err) console.log("Error in starting Server: " +  err);
+            else console.log(`Starting server on PORT ${PORT}`);
+        });
+    // })
 });

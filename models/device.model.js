@@ -31,7 +31,7 @@ class Device{
         console.log(sql);
         const res = db.execute(sql);
         console.log(res);
-        return res
+        return res;
     }
 
     static findByMACId(MAC){
