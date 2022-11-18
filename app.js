@@ -27,7 +27,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 app.use(cors(
     {
-        origin: "localhost:5000, localhost:3000", // allow the server to accept request from different origin,
+        origin: "*", // allow the server to accept request from different origin,
         // allowedHeaders: ["Content_Type", "Authorization","X-Requested-With"],
         allowedHeaders: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",

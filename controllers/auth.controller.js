@@ -3,13 +3,14 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const Device = require('../models/device.model');
 const User = require('../models/user.model');
+const verifyToken = require("../utils/googleOAuth");
+const { emit } = require('../mysql/mysqlConnection');
 // const {User} = require("./models");
 
 exports.verifyDevice = async (req, res, next) => {
     let MAC = req.body.MAC;
     if (!MAC) return res.status(401);
     console.log(MAC);
-
     try {
         const [data, extra] = await Device.findByMACId(MAC);
         console.log(extra);
@@ -26,18 +27,13 @@ exports.verifyDevice = async (req, res, next) => {
 
 exports.googleLogin = async (req, res, next) => {
     const token = req.body.token;
-    console.log(token);
-    if (!token) return res.status(400);
-    const jwtDecode = jwt.decode(token);
-    console.log(jwtDecode);
-    const email = jwtDecode.email;
-    if (!id) return res.status(400);
-
+    const ticket = await verifyToken(token);
+    const {email, picture, name} = ticket.payload;
+    console.log(name, email, picture);
     try {
         const [user, _] = await User.findByEmail(email)
+        console.log(user + "  " + typeof(user));
         if (user.length == 0) {
-            const name = jwtDecode.name;
-            const picture = jwtDecode.picture;
             const user = new User(name, email, picture);
             console.log(user);
             const [data, extra] = await user.save();
@@ -85,7 +81,7 @@ exports.googleSignup = async (req, res, next) => {
         const [data, extra] = await user.save();
         console.log(data.insertId);
         const [userData, _] = await User.findById(data.insertId);
-        // user = userData[0];
+        user = userData[0];
         console.log(user);
         console.log(userData[0]);
         const token = jwt.sign(

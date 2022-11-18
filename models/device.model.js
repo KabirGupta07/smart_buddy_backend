@@ -1,4 +1,5 @@
 const db = require('../mysql/mysqlConnection');
+const database = "device";
 class Device{
     constructor(MAC, IP, geo_location, store, name,RAM){
         this.MAC = MAC;
@@ -35,7 +36,7 @@ class Device{
     }
 
     static findByMACId(MAC){
-        let sql = `SELECT * from ${registered_devices} where MAC= ${MAC}`;
+        let sql = `SELECT * from ${database} where MAC=${MAC}`;
         db.execute(sql);
     }
 }
