@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const Device = require('../models/device.model');
 const User = require('../models/user.model');
 const verifyToken = require("../utils/googleOAuth");
-const { emit } = require('../mysql/mysqlConnection');
 // const {User} = require("./models");
 
 exports.verifyDevice = async (req, res, next) => {
@@ -13,9 +12,9 @@ exports.verifyDevice = async (req, res, next) => {
     console.log(MAC);
     try {
         const [data, extra] = await Device.findByMACId(MAC);
-        console.log(extra);
-        if (!data) return res.status(401).send("No such Registered Device!");
-        return res.json({ message: "DEVICE VERIFIED!" }).status(200);
+        console.log(data);
+        if (data.length == 0) return res.status(401).json({errior:"No Such Registered Devices!"});
+        return res.json({ message: "Device Verified!" }).status(200);
     }
     catch {
         (err) => {

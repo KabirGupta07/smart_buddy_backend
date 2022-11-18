@@ -36,8 +36,9 @@ class Device{
     }
 
     static findByMACId(MAC){
-        let sql = `SELECT * from ${database} where MAC=${MAC}`;
-        db.execute(sql);
+        let sql = `SELECT * from ${database} where MAC="${MAC}";`;
+        console.log(sql);
+        return db.execute(sql);
     }
 }
 
