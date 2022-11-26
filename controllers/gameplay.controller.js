@@ -1,6 +1,8 @@
 const GamePlay = require('../models/gameplay.model');
 
 exports.getData = async (req, res, next) =>{
+    const token = req.body.user_id;
+    
     try{
         const [data, _] = await GamePlay.findAll();
         return res.status(200).json(data);

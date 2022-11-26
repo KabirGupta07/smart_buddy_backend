@@ -40,6 +40,12 @@ class Device{
         console.log(sql);
         return db.execute(sql);
     }
+
+    static findByUserId(user_id){
+        let sql =`SELECT * FROM ${database} WHERE user_id = ${user_id}`
+        console.log(sql);
+        return db.execute(sql);
+    }
 }
 
 module.exports = Device;

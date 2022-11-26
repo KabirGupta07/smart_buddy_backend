@@ -104,6 +104,37 @@ exports.googleSignup = async (req, res, next) => {
     //     const user = new User(name, email);
 
     // }
+};
+
+exports.signup = async (req, res, next) =>{
+    const {email, password} = req.body;
+    if(!email || !password){
+        return res.status(400);
+    }
+    const user = new User(null, email,null);
+    console.log(user);
+    return res.status(200).json(user);
+    // try{
+    // const [userData, _] = await user.save();
+         
+    // }catch{(err)=>{
+    //     console.log(err);
+    // }}
+}
+
+exports.getDeviceStatus = async (req, res, next) =>{
+    const user_id = req.query.user_id;
+    if(!user_id) return res.status(400);
+    console.log(user_id);
+    try{
+        const[deviceData, _]  = await Device.findByUserId(user_id);
+        console.log(JSON.stringify(deviceData));
+        return res.status(200).json({data: deviceData});
+    }
+    catch{(err) => {
+        console.log(err);
+    }}
+    return res.json()
 }
 
 exports.getRefreshToken = (req, res, next) => { };
