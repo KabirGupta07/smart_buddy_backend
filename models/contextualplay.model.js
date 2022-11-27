@@ -18,7 +18,7 @@ class ContextualPlay{
             phrase  
         )
         values(
-            ${this.device_id},
+            "${this.device_id}",
             ${this.contextual_id},
             "${this.played_at}",
             "${this.phrase}"
