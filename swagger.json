@@ -411,6 +411,45 @@
           }
         }
       }
+    },
+    "/descriptive/play/data/{descriptive_id}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "descriptive_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "played_at": {
+                  "example": "any"
+                },
+                "device_id": {
+                  "example": "any"
+                },
+                "phrase": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   }
 }

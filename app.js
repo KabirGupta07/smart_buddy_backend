@@ -9,6 +9,7 @@ const contextualRoutes = require("./routes/contextual.routes");
 const surveyRoutes = require("./routes/survey.route");
 const gameplayRoutes = require('./routes/gameplay.routes');
 const gameRoutes = require('./routes/game.routes');
+const descriptiveRoutes = require('./routes/descriptive.routes');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -17,6 +18,7 @@ const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 
 // MY_SQL Connection 
 const conn = require('./mysql/connectionVerify');
+const DescriptivePlay = require('./models/descriptiveplay.model');
 
 const PORT = process.env.PORT;
 app.get('/', (req, res, next) => {
@@ -40,6 +42,7 @@ app.use('/retail', retailRoutes);
 app.use('/survey', surveyRoutes);
 app.use('/gameplay', gameplayRoutes);
 app.use('/game', gameRoutes);
+app.use('/descriptive', descriptiveRoutes)
 
 
 conn.connect((err, conn) =>{ 
