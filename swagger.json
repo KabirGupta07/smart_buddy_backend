@@ -49,6 +49,36 @@
         }
       }
     },
+    "/auth/signup": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/auth/google_login": {
       "post": {
         "description": "",
@@ -72,6 +102,26 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/device/status": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -127,6 +177,9 @@
                   "example": "any"
                 },
                 "device_id": {
+                  "example": "any"
+                },
+                "phrase": {
                   "example": "any"
                 }
               }
