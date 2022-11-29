@@ -14,7 +14,7 @@ exports.getData = async (req, res, next) =>{
 
 exports.postData = async (req, res, next) =>{
 let device_id = req.body.device_id ;
-let played_at = req.body.device_id;
+let played_at = req.body.played_at;
 let phrase = req.body.phrase;
 let product_name = req.body.product_name;
 let quantity = req.body.quantity;
@@ -32,7 +32,9 @@ catch{
         return res.status(500).json("Error" , err);
     }
 }
-}
+};
+
+
 // exports.postSiteOptions = (req, res, next) =>{
 //     const option = req.body.value;
 //     const label = option.toUpperCase();

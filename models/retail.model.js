@@ -25,7 +25,7 @@ class Retail{
             '${this.phrase}',
             '${this.product_name}',
             '${this.quantity}',
-            '${this.packaging}',
+            '${this.packaging}'
         );`;
         console.log(sql);
         return db.execute(sql);

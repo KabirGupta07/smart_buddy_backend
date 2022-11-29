@@ -295,6 +295,9 @@
                 "device_id": {
                   "example": "any"
                 },
+                "played_at": {
+                  "example": "any"
+                },
                 "phrase": {
                   "example": "any"
                 },
