@@ -31,9 +31,10 @@ class ContextualPlay{
         let sql =`SELECT * FROM ${database}`;
         return db.execute(sql);
     }
-    findById(contextual_id){
-        let sql = `SELECT * FROM ${database} WHERE contextual_id = ${contextual_id}`;
+    findById(device_id){
+        let sql = `SELECT * FROM ${database} WHERE device_id = ${device_id}`;
         return db.execute(sql);
     }
 }
 module.exports = ContextualPlay;
+   

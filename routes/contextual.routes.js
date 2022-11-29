@@ -7,9 +7,9 @@ const contextualPlayController = require('../controllers/contextualplay.controll
 router.route("/data")
     .get(contextualController.getData);
     // .post(contextualController.postData);
+router.get('/play/data', contextualPlayController.getData);
 
-router.route('/play/data/:contextual_id')
-    .post(contextualPlayController.postPlayData);
+router.post('/play/data/:contextual_id', contextualPlayController.postPlayData);
 
 // router.post("/add_video/:retail_id", contextualController.addVideo);
 

@@ -1,31 +1,34 @@
 const db = require('../mysql/mysqlConnection');
 class Retail{
-    constructor(){ 
-        this.productSKU = productSKU;
-        this.brand = brand;
+    constructor(device_id, played_at, phrase, product_name, quantity, packaging){ 
+        this.device_id = device_id;
+        this.played_at = played_at;
+        this.phrase = phrase;
+        this.product_name = product_name;
         this.quantity = quantity;
-        this.price = price;
+        this.package = packaging;
     }
 
     save(){
         let sql= `
         INSERT INTO retail( 
-            productSKU,
-            brand,
+            device_id,
+            played_at,
+            phrase,
+            product_name,
             quantity,
-            price
+            packaging
         )
         values(
-            '${this.productSKU}',
-            '${this.brand}',
+            '${this.device_id}',
+            '${this.played_at}',
+            '${this.phrase}',
+            '${this.product_name}',
             '${this.quantity}',
-            '${this.price}',
-        )`;
-
-        const res = db.execute(sql);
-        console.log(res);
-        return res
-
+            '${this.packaging}',
+        );`;
+        console.log(sql);
+        return db.execute(sql);
     }
 
     static findAll(){
@@ -34,7 +37,8 @@ class Retail{
     }
 
     static findById(id){
-        
+        let sql = `SELECT * FROM retail where device_id=${id}`;
+        return db.execute(sql);
     }
 }
 

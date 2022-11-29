@@ -1,4 +1,5 @@
 const ContextualPlay = require('../models/contextualplay.model');
+
 exports.postPlayData = async (req, res, next) =>{
     let contextual_id = req.params.contextual_id;
     let played_at = req.body.played_at;
@@ -18,4 +19,17 @@ exports.postPlayData = async (req, res, next) =>{
         }
     }
     
+}
+
+exports.getData = async (req, res, next) =>{
+    let user_id = req.params.user_id;
+    try{
+        const [data, _] = await ContextualPlay.findByDevice(id)
+    }
+    catch{
+        (err) =>{
+
+        }
+    }
+
 }

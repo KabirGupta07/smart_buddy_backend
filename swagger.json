@@ -157,6 +157,13 @@
         }
       }
     },
+    "/contextual/play/data": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/contextual/play/data/{contextual_id}": {
       "post": {
         "description": "",
@@ -278,10 +285,38 @@
       },
       "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "example": "any"
+                },
+                "phrase": {
+                  "example": "any"
+                },
+                "product_name": {
+                  "example": "any"
+                },
+                "quantity": {
+                  "example": "any"
+                },
+                "packaging": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -447,6 +482,33 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/descriptive/data": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "example": "any"
+                },
+                "playtime": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

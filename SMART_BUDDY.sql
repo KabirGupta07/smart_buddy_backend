@@ -33,7 +33,7 @@ PRIMARY KEY(contextual_id)
 );
 
 CREATE TABLE contextual_play(
-contextual_id INT unique auto_increment,
+contextual_id INT,
 played_at date,
 device_id  int,
 PRIMARY KEY(contextual_id, played_at)

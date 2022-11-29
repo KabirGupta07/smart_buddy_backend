@@ -13,7 +13,25 @@ exports.getData = async (req, res, next) =>{
 }
 
 exports.postData = async (req, res, next) =>{
-    return res.status(201).json({res: "SAVED SUCCESSFULLY"});
+let device_id = req.body.device_id ;
+let played_at = req.body.device_id;
+let phrase = req.body.phrase;
+let product_name = req.body.product_name;
+let quantity = req.body.quantity;
+let packaging = req.body.packaging;
+
+const retail = new Retail(device_id, played_at, phrase, product_name, quantity, packaging);
+try{
+    const [data, _] = await retail.save();
+    console.log(data);
+    return res.status(200).json(data);
+}
+catch{
+    (err) =>{
+        console.log(err);
+        return res.status(500).json("Error" , err);
+    }
+}
 }
 // exports.postSiteOptions = (req, res, next) =>{
 //     const option = req.body.value;
