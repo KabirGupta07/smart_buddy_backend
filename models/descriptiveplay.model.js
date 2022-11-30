@@ -28,7 +28,7 @@ class DescriptivePlay{
     }
 
     static findAll(){
-        let sql =`SELECT * FROM ${database}`;
+        let sql =`SELECT * FROM ${database} order by played_at desc`;
         console.log(sql);
         return db.execute(sql);
     }
