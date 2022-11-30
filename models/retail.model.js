@@ -32,7 +32,7 @@ class Retail{
     }
 
     static findAll(){
-        let sql = `SELECT * FROM retail`;
+        let sql = `SELECT * FROM retail order by played_at desc`;
         return db.execute(sql);
     }
 
