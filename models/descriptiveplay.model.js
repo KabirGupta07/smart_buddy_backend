@@ -27,12 +27,14 @@ class DescriptivePlay{
         return db.execute(sql);
     }
 
-    findAll(){
+    static findAll(){
         let sql =`SELECT * FROM ${database}`;
+        console.log(sql);
         return db.execute(sql);
     }
-    findById(descriptive_id){
-        let sql = `SELECT * FROM ${database} WHERE contextual_id = ${descriptive_id}`;
+    static findById(id){
+        let sql = `SELECT * FROM ${database} WHERE descriptive_id = ${id}`;
+        console.log(sql);
         return db.execute(sql);
     }
 }

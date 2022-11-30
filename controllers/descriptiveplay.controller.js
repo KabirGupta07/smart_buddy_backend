@@ -18,4 +18,19 @@ exports.postPlayData = async (req, res, next) =>{
         }
     }
     
+};
+
+exports.getPlayData = async (req, res, next) =>{
+    console.log("Hello");
+    // let user_id = req.params.user_id;
+    try{
+        const [data, _] = await DescriptivePlay.findAll()
+        console.log(data);
+        return res.status(200).json(data);
+    }
+    catch{
+        (err) =>{
+            return res.status(500).json("Error: " + err);
+        }
+    }
 }
