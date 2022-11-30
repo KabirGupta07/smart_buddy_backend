@@ -28,7 +28,7 @@ class ContextualPlay{
     }
 
     static findAll(){
-        let sql =`SELECT * FROM ${database}`;
+        let sql =`SELECT * FROM ${database} ORDER BY played_at DESC;`;
         console.log(sql);
         return db.execute(sql);
     }
