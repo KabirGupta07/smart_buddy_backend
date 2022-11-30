@@ -27,11 +27,12 @@ class ContextualPlay{
         return db.execute(sql);
     }
 
-    findAll(){
+    static findAll(){
         let sql =`SELECT * FROM ${database}`;
+        console.log(sql);
         return db.execute(sql);
     }
-    findById(device_id){
+    static findById(device_id){
         let sql = `SELECT * FROM ${database} WHERE device_id = ${device_id}`;
         return db.execute(sql);
     }

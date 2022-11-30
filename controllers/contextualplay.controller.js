@@ -22,14 +22,16 @@ exports.postPlayData = async (req, res, next) =>{
 }
 
 exports.getData = async (req, res, next) =>{
-    let user_id = req.params.user_id;
+    console.log("Hello");
+    // let user_id = req.params.user_id;
     try{
-        const [data, _] = await ContextualPlay.findByDevice(id)
+        const [data, _] = await ContextualPlay.findAll()
+        // console.log(data);
+        return res.status(200).json(data);
     }
     catch{
         (err) =>{
-
+            return res.status(500).json("Error: " + err);
         }
     }
-
 }
