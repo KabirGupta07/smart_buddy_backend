@@ -6,7 +6,7 @@ class Retail{
         this.phrase = phrase;
         this.product_name = product_name;
         this.quantity = quantity;
-        this.package = packaging;
+        this.packaging = packaging;
     }
 
     save(){

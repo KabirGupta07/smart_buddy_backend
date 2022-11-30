@@ -21,6 +21,7 @@ let quantity = req.body.quantity;
 let packaging = req.body.packaging;
 
 const retail = new Retail(device_id, played_at, phrase, product_name, quantity, packaging);
+console.log(retail);
 try{
     const [data, _] = await retail.save();
     console.log(data);
