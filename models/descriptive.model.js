@@ -22,7 +22,7 @@ class Descriptive{
     }
 
     static findAll(){
-        let sql = `SELECT * FROM ${database}`;
+        let sql = `SELECT * FROM ${database} `;
         return db.execute(sql);
     }
 

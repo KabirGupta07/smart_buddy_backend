@@ -18,7 +18,6 @@ const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 
 // MY_SQL Connection 
 const conn = require('./mysql/connectionVerify');
-const DescriptivePlay = require('./models/descriptiveplay.model');
 
 const PORT = process.env.PORT;
 app.get('/', (req, res, next) => {
