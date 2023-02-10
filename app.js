@@ -21,7 +21,7 @@ const conn = require('./mysql/connectionVerify');
 
 const PORT = process.env.PORT;
 app.get('/', (req, res, next) => {
-    res.send("HELLO")
+    res.send("HELLO, I am redeployed")
 });
 
 app.use(express.json());
